@@ -1,18 +1,19 @@
-# This is a sample Python script.
+import cv2
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+cv2.namedWindow("preview")
+vc = cv2.VideoCapture(0)
 
+if vc.isOpened(): # try to get the first frame
+    rval, frame = vc.read()
+else:
+    rval = False
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-    print('First Commit')
-    print('Majo')
-    print('MajoPokus')
+while rval:
+    cv2.imshow("preview", frame)
+    rval, frame = vc.read()
+    key = cv2.waitKey(20)
+    if key == 27: # exit on ESC
+        break
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+vc.release()
+cv2.destroyWindow("preview")
