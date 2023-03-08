@@ -23,14 +23,13 @@ while True:
             objPoints = []
             imgPoints = []
 
-            images = glob.glob(r'D:\School\PVSO\Projects\uloha2\**.jpg', recursive=True)
+            images = glob.glob(r'C:\Users\mario\Desktop\Predmety\2. ing\VZI\Blok1Pvso\uloha2\**.jpg', recursive=True)
             # D:\School\PVSO\Projects\uloha2\**.jpg
             # C:\Users\mario\Desktop\Predmety\2. ing\VZI\Blok1Pvso\uloha2\**.jpg
 
             for fName in images:
                 img = cv2.imread(fName)
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                a = a + 1
 
                 ret, corners = cv2.findChessboardCorners(gray, (7, 5), None)
                 if (ret == True):
@@ -39,30 +38,20 @@ while True:
                     imgPoints.append(corners2)
                     ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objPoints, imgPoints, gray.shape[::-1], None,
                                                                        None)
-                    print(mtx)
-
-                    break;
+                    a = a + 1
+                    if a == 10:
+                        calibration = cv2.imread('calibration9.jpg')
+                        h, w = calibration.shape[:2]
+                        newCameraMtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h))
+                        dst = cv2.undistort(calibration, mtx, dist, None, newCameraMtx)
+                        cv2.imwrite('calibResult.jpg', dst)
+                        print(newCameraMtx)
                 else:
                     print("Nevysiel nam ret==True")
-
     key = cv2.waitKey(1)
     if key == 27:  # exit on ESC
         break
-
-# print("Vyskocil som z whilu")
-# img = cv2.imread('left12.jpg')
-# h, w = img.shape[:2]
-# newcameramtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h))
-#
-# # undistort
-# dst = cv2.undistort(img, mtx, dist, None, newcameramtx)
-# # crop the image
-# x, y, w, h = roi
-# dst = dst[y:y+h, x:x+w]
-# cv2.imwrite('calibresult.png', dst)
-
-
-
-
 camera.release()
 cv2.destroyAllWindows()
+
+
