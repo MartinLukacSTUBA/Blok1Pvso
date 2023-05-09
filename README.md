@@ -9,3 +9,9 @@ Snímanie obrazu kamerou.\
 Kalibracia kamery na základe snímaného obrazu.\
 Detekovanie kruhov na obraze kamery.
 
+# Zadanie 3
+Naprogramujte algoritmus na detekcia kontur.\
+
+# Zadanie 4
+Segmentujete priestor do klastrov (K-means, DBSCAN, RANSAC).\
+
